@@ -18,41 +18,38 @@ function App() {
   ]
 
   const spinWheel = () => {
-    if (spinning) return;
-    setSpinning(true);
+    if (spinning) return
+    setSpinning(true)
 
-    const extraRotation = 360 * 10 + Math.floor(Math.random() * 360); // mais voltas
-    const finalRotation = rotation + extraRotation;
+    const extraRotation = 360 * 10 + Math.floor(Math.random() * 360)
+    const finalRotation = rotation + extraRotation
 
-    setRotation(finalRotation);
+    setRotation(finalRotation)
 
-    // Transição suave e realista: acelera no início e desacelera no final
-    wheelRef.current.style.transition = "transform 6s cubic-bezier(0.1, 0.9, 0.3, 1)";
-    wheelRef.current.style.transform = `rotate(${finalRotation}deg)`;
+    wheelRef.current.style.transition = "transform 6s cubic-bezier(0.1, 0.9, 0.3, 1)"
+    wheelRef.current.style.transform = `rotate(${finalRotation}deg)`
 
     setTimeout(() => {
-      setSpinning(false);
-      const degrees = finalRotation % 360;
-      const normalizedDegrees = (360 - degrees + sliceAngle / 2) % 360;
-      const index = Math.floor(normalizedDegrees / sliceAngle) % slices.length;
-      console.log("Ganhou:", prizes[index], index);
-    }, 6000);
+      setSpinning(false)
+      const degrees = finalRotation % 360
+      const normalizedDegrees = (360 - degrees + sliceAngle / 2) % 360
+      const index = Math.floor(normalizedDegrees / sliceAngle) % slices.length
+      console.log("Ganhou:", prizes[index], index)
+    }, 6000)
 
-  };
+  }
 
-  const sliceAngle = 360 / slices.length;
+  const sliceAngle = 360 / slices.length
 
   return (
     <>
       <div className="flex flex-col items-center justify-center min-h-screen">
-        {/* Ponteiro */}
+       
         <img
           src="/ponteiro.png"
           alt="Pointer"
-          className="w-16 absolute top-[15%] z-20"
+          className="w-10 absolute top-[15%] z-20"
         />
-
-
 
         <div
           onClick={spinWheel}
@@ -61,11 +58,11 @@ function App() {
           style={{ transition: "transform 0s" }}
         >
           {slices.map((src, i) => {
-            const angle = i * sliceAngle;
+            const angle = i * sliceAngle
             return (
               <div
                 key={i}
-                className="absolute w-full h-full flex justify-center items-center"
+                className="absolute w-[200px] h-full flex justify-center items-center"
                 style={{ transform: `rotate(${angle}deg)` }}
               >
                 <img
@@ -78,28 +75,36 @@ function App() {
                   }}
                 />
                 <p
-                  className="absolute p-2 font-bold text-white text-4xl"
+                  className="absolute p-2 font-bold text-white text-lg"
                   style={{
-                    transform: `translateY(-300%)`,
+                    transform: `translateY(-150%)`,
                     transformOrigin: '50% 100%',
                   }}
                 >
                   {i}
                 </p>
               </div>
-            );
+            )
           })}
 
         </div>
+
+        <img 
+          src="/arco.png"
+          className='absolute w-[600px]'
+        />
+
+        <button
+          onClick={spinWheel}
+          className="absolute z-[99999] px-6 py-3 cursor-pointer text-white rounded-full text-lg font-bold"
+        >
+          <img 
+            className='w-[120px] shadow-sm'
+            src="/logo.png" 
+          />
+        </button>
+
       </div>
-
-      <button
-        onClick={spinWheel}
-        className="relative z-[99999] mt-8 px-6 py-3 bg-green-700 text-white rounded-full text-lg font-bold shadow-lg"
-      >
-        Girar 🎉
-      </button>
-
     </>
   )
 }
